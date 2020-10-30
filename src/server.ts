@@ -23,12 +23,21 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   app.get("/filteredimage", async (req, res) => {
     const isImageURL = require('image-url-validator');
     let imageURL = req.query.image_url;
+    console.log(imageURL);
     //validate the image_url query
     if (!imageURL) {
       return res.status(500).send({ message: "image_url is must, but not found" });
     }
+    
+    let validFlag = false;
+    try {
+      validFlag = await isImageURL(imageURL.toString()); 
+    } catch(error) {
+      console.log(console.error());
+    }
+    console.log('Valid Flag\t:\t',validFlag);
 
-    if (!isImageURL(imageURL.toString())) {
+    if (!validFlag) {
       return res.status(500).send({ message: "not a valid image_url" });
     }
     filterImageFromURL(imageURL.toString())
