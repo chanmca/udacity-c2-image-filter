@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from 'express';
 import bodyParser from "body-parser";
 import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 import { requireAuth, generateJWT } from './auth';
@@ -14,7 +14,7 @@ import { requireAuth, generateJWT } from './auth';
   app.use(bodyParser.json());
 
   //CORS Should be restricted
-  app.use(function(req, res, next) {
+  app.use(function async (req: express.Request, res: express.Response, next: NextFunction) {
     res.header("Access-Control-Allow-Origin", `http://localhost:${port}`);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
@@ -33,7 +33,7 @@ import { requireAuth, generateJWT } from './auth';
   // });
 
   // GET filteredimage endpoint
-  app.get("/filteredimage",  requireAuth, async (req, res) => {
+  app.get("/filteredimage",  requireAuth, async (req: express.Request, res: express.Response) => {
     const isImageURL = require('image-url-validator');
     let imageURL = req.query.image_url;
     console.log(imageURL);
@@ -73,7 +73,7 @@ import { requireAuth, generateJWT } from './auth';
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (req, res) => {
+  app.get("/", async (req: express.Request, res: express.Response) => {
     res.send("try GET /filteredimage?image_url={{}}");
   });
 
