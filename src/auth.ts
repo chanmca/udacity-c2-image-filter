@@ -8,14 +8,14 @@ export function generateJWT(decoded: string): string {
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
-  console.log(config.jwt.decoded);
-    console.log(generateJWT(config.jwt.decoded));
+    //console.log(config.jwt.decoded);
+    //console.log(generateJWT(config.jwt.decoded));
     if (!req.headers || !req.headers.authorization){
         return res.status(401).send({ message: 'No authorization headers.' });
     }
 
     const token_bearer = req.headers.authorization.split(' ');
-    console.log("Token Bearer\t:\t" + token_bearer);
+    //console.log("Token Bearer\t:\t" + token_bearer);
     if(token_bearer.length != 2){
         return res.status(401).send({ message: 'Malformed token.' });
     }
@@ -26,7 +26,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
       if (err) {
         return res.status(500).send({ auth: false, message: 'Failed to authenticate.' });
       }
-      console.log(decoded);
+      //console.log(decoded);
       return next();
         
     });
