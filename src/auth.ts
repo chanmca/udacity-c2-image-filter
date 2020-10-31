@@ -9,7 +9,7 @@ export function generateJWT(decoded: string): string {
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
     //console.log(config.jwt.decoded);
-    //console.log(generateJWT(config.jwt.decoded));
+    console.log(generateJWT(config.jwt.decoded));
     if (!req.headers || !req.headers.authorization){
         return res.status(401).send({ message: 'No authorization headers.' });
     }
